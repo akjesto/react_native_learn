@@ -16,15 +16,9 @@ export default class CheckBox extends Component {
         }
     }
     clickOnCheckBox = () => {
-       if(this.state.isSelected){
-        this.setState({
-            isSelected: false
-          })
-       }else{
-        this.setState({
-            isSelected: true
-          })
-       }
+        this.setState(previousState => (
+            {isSelected: !previousState.isSelected}
+        ))
     }
     getValue = () => {
         return this.state.isSelected
