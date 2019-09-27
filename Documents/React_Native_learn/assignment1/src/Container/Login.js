@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import images from "../Themes/Images";
@@ -7,28 +7,21 @@ import CheckBox from "../Component/CheckBox";
 import { checkEmail } from "../Utils/Validations";
 import { TextField } from "../Component/TextField";
 import { i18n } from "../Assets/Strings";
+import { Button } from "../Component/Button";
 
 export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
-
   clickOnLogin = () => {
     if (this.check.getValue() == false) {
-      alert("Check on Remember password");
+      alert(i18n.t("enable_check"));
     } else if (this.emailValue.gettextFieldValue() == "") {
-      alert("Required Email");
+      alert(i18n.t("email_required"));
     } else if (this.passwordValue.gettextFieldValue() == "") {
-      alert("Required Password");
+      alert(i18n.t("password_required"));
     } else if (this.emailValue.gettextFieldValue()) {
       if (checkEmail(this.emailValue.gettextFieldValue())) {
-        alert(" Email Valid");
+        alert(i18n.t("email_valid"));
       } else {
-        alert(" Email InValid");
+        alert(i18n.t("email_invalid"));
       }
     }
   };
@@ -55,12 +48,7 @@ export default class Login extends Component {
             ></CheckBox>
           </View>
           <View style={styles.loginButtonContainer}>
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={this.clickOnLogin}
-            >
-              <Text>Signin</Text>
-            </TouchableOpacity>
+            <Button text={i18n.t("login")} onClick={this.clickOnLogin}></Button>
           </View>
           <View style={styles.bottomContainer}>
             <Text style={styles.bottomText}>www.opentrends.net</Text>
@@ -89,11 +77,6 @@ const styles = StyleSheet.create({
     marginTop: 100,
     padding: 30
   },
-  input: {
-    color: "#ffffff",
-    height: 30,
-    fontSize: 16
-  },
   lineView: {
     backgroundColor: "#ffffff",
     height: 0.5,
@@ -103,18 +86,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginRight: 20
   },
-  loginButton: {
-    backgroundColor: "#ffffff",
-    alignItems: "center",
-    justifyContent: "center",
-    height: 40,
-    width: 100,
-    borderRadius: 10
-  },
   bottomContainer: {
     flex: 1,
     color: "#ffffff",
-    //backgroundColor: "green",
     justifyContent: "flex-end"
   },
   bottomText: {
