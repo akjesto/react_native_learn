@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import {
   View,
-  TextInput,
   StyleSheet,
   TouchableOpacity,
   Text,
   Image,
-  KeyboardAvoidingView
 } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 import images from "../Themes/Images";
 import CheckBox from "../Component/CheckBox";
 import { checkEmail } from "../Utils/Validations";
+import { TextField } from "../Component/TextField";
+import { i18n } from "../Assets/Strings";
 
 export default class Login extends Component {
 
@@ -28,13 +29,14 @@ export default class Login extends Component {
     if (this.check.getValue() == false){
       alert('Check on Remember password')
     }
-    else if(this.state.email == '') {
+    else if(this.emailValue.gettextFieldValue() == '') {
       alert('Required Email')
     }
-    else if(this.state.password == '') {
+    else if(this.passwordValue.gettextFieldValue() == '') {
       alert('Required Password')
-    }else if(this.state.email){
-      if(checkEmail(this.state.email)){
+    }
+    else if(this.emailValue.gettextFieldValue()){
+      if(checkEmail(this.emailValue.gettextFieldValue())){
         alert(' Email Valid')
       }else{
         alert(' Email InValid')
@@ -49,25 +51,11 @@ export default class Login extends Component {
         <KeyboardAwareScrollView contentContainerStyle={styles.logoContainer}>
           <Image style={styles.logo} source={images.login_user} />
           <View style={styles.formContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              placeholderTextColor="#C0C0C0"
-              onChangeText={(value) => this.setState({email:value})}
-              value={this.state.email}
-            ></TextInput>
+            <TextField placeholder={i18n.t('email')} ref= {email=>this.emailValue=email}></TextField>
             <View style={styles.lineView}></View>
-            <TextInput
-              style={styles.input}
-              placeholder="password"
-              placeholderTextColor="#C0C0C0"
-              secureTextEntry
-              placeholderTextColor="#C0C0C0"
-              onChangeText={(value) => this.setState({password:value})}
-              value={this.state.password}
-            ></TextInput>
+            <TextField placeholder={i18n.t('password')} ref= {password=>this.passwordValue=password}></TextField>
             <View style={styles.lineView}></View>
-            <CheckBox value="Remember me!" 
+            <CheckBox value={i18n.t('remember')} 
               ref = {ch=>this.check=ch}></CheckBox>
           </View>
           <View style={styles.loginButtonContainer}>
@@ -93,7 +81,6 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     flex: 1,
- //   backgroundColor: "red"
   },
   logo: {
     width: 100,
